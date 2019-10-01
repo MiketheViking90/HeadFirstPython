@@ -19,3 +19,4 @@ a.increase()
 
 print(a)
 print(b)
+print(type(a))

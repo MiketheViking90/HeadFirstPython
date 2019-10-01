@@ -1,4 +1,4 @@
-from src.mymodules.vsearch import search_for_letters
+from src.ch05.vsearch import search_for_letters
 
 search_for_letters("djfieifjef", set("aeiou"))
 
