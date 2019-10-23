@@ -1,5 +1,7 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, escape
 from vsearch import search_for_letters
+
+LOG_FILE_NAME = 'vsearch.txt'
 
 appl = Flask(__name__)
 
@@ -26,8 +28,15 @@ def search() -> str:
 def entry_page() -> 'html':
     return render_template('entry.html', the_title='Welcome to search on the web!')
 
+@appl.route('/viewlog')
+def viewlog() -> str:
+    with open(LOG_FILE_NAME) as log:
+        contents = escape(log.read())
+    return contents
+
+
 def log_request(req: 'flask_request', res: str) -> None:
-    with open('vsearch.txt') as log:
+    with open(LOG_FILE_NAME, 'a') as log:
         print(req, res, file=log)
 
 if __name__ == '__main__':
