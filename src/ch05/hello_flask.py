@@ -14,6 +14,7 @@ def search() -> str:
     phrase = request.form['phrase']
     letters = request.form['letters']
     res = str(search_for_letters(phrase, set(letters)))
+    log_request(request, res)
     return render_template('results.html',
                            the_title = 'Here are your results: ',
                            the_phrase = phrase,
@@ -25,4 +26,9 @@ def search() -> str:
 def entry_page() -> 'html':
     return render_template('entry.html', the_title='Welcome to search on the web!')
 
-appl.run(debug=True)
+def log_request(req: 'flask_request', res: str) -> None:
+    with open('vsearch.txt') as log:
+        print(req, res, file=log)
+
+if __name__ == '__main__':
+    appl.run(debug=True)
