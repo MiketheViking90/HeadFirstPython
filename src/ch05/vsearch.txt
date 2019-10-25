@@ -1,4 +1,0 @@
-<Request 'http://127.0.0.1:5000/search' [POST]> {'h', 'e'}
-<Request 'http://127.0.0.1:5000/search' [POST]> {'a', 'k'}
-<Request 'http://127.0.0.1:5000/search' [POST]> {'e', 'i'}
-<Request 'http://127.0.0.1:5000/search' [POST]> {'t', 'a'}
