@@ -30,14 +30,19 @@ def entry_page() -> 'html':
 
 @appl.route('/viewlog')
 def viewlog() -> str:
+    log_content = []
     with open(LOG_FILE_NAME) as log:
-        contents = escape(log.read())
-    return contents
+        for line in log.readlines():
+            items = list(map(lambda x : escape(x), line.split('|')))
+            log_content.append(items)
+    titles = ('Form Data', 'Remote_addr', 'User_agent', 'Results')
+    return render_template('viewlog.html', the_title='View Log',
+                    the_row_titles=titles, the_data=log_content, )
 
 
 def log_request(req: 'flask_request', res: str) -> None:
     with open(LOG_FILE_NAME, 'a') as log:
-        print(req, res, file=log)
+        print(req.form, req.remote_addr, req.user_agent, res, file=log, sep='|')
 
 if __name__ == '__main__':
     appl.run(debug=True)
