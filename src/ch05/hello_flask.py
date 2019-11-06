@@ -1,17 +1,21 @@
 from flask import Flask, render_template, request, escape
 from vsearch import search_for_letters
 
+from src.ch10.checker import check_login
+
 LOG_FILE_NAME = 'vsearch.txt'
 
 appl = Flask(__name__)
 
 
 @appl.route('/get_author')
+@check_login
 def get_author() -> str:
     return 'siliwen is the author'
 
 
 @appl.route('/search', methods=['POST'])
+@check_login
 def search() -> str:
     phrase = request.form['phrase']
     letters = request.form['letters']
@@ -25,10 +29,12 @@ def search() -> str:
 
 @appl.route('/')
 @appl.route('/entry')
+@check_login
 def entry_page() -> 'html':
     return render_template('entry.html', the_title='Welcome to search on the web!')
 
 @appl.route('/viewlog')
+@check_login
 def viewlog() -> str:
     log_content = []
     with open(LOG_FILE_NAME) as log:
